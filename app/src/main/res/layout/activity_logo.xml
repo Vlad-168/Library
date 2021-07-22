@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,14 +8,13 @@
     android:background="@color/background"
     app:layoutDescription="@xml/activity_logo_scene"
     tools:context=".LogoActivity"
-    android:id="@+id/motion_layout"
-    >
+    android:id="@+id/motion_layout">
 
     <ImageView
         android:id="@+id/logoImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/splash_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

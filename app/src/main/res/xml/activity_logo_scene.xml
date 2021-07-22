@@ -4,16 +4,49 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
+        motion:constraintSetStart="@+id/start"
         motion:constraintSetEnd="@+id/end"
-        motion:constraintSetStart="@id/start"
-        motion:duration="1000">
-       <KeyFrameSet>
-       </KeyFrameSet>
+        motion:autoTransition="animateToEnd"
+        motion:duration="4000"
+        motion:motionInterpolator="linear" >
+        <KeyFrameSet >
+            <KeyAttribute
+                motion:motionTarget="@+id/logoImageView"
+                motion:framePosition="25"
+                android:translationY="10dp" />
+            <KeyAttribute
+                motion:motionTarget="@+id/logoImageView"
+                motion:framePosition="50"
+                android:translationY="70dp" />
+            <KeyAttribute
+                motion:motionTarget="@+id/logoImageView"
+                motion:framePosition="75"
+                android:translationY="10dp" />
+        </KeyFrameSet>
     </Transition>
 
-    <ConstraintSet android:id="@+id/start">
+    <ConstraintSet
+        android:id="@+id/start">
+        <Constraint
+            android:id="@+id/logoImageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet
+        android:id="@+id/end">
+        <Constraint
+            android:id="@+id/logoImageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:translationY="-100dp" />
     </ConstraintSet>
 </MotionScene>

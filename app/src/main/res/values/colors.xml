@@ -8,5 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background">#A7D1CD</color>
-
+    <color name="editTextView">#F4D28A</color>
+    <color name="text">#864D62</color>
+    <color name="button">#C78473</color>
 </resources>

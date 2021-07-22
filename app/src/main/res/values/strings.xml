@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">AutomatedLibrary</string>
+    <string name="app_name">Library</string>
+    <string name="todo">TODO</string>
+    <string name="email_hint">Email</string>
+    <string name="pass_hint">Пароль</string>
+    <string name="login_btn">Войти</string>
+    <string name="login_btn_reg">Регистрация</string>
+    <string name="login_show_pass">Показать пароль</string>
 </resources>
