@@ -36,8 +36,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passLayout"
+    <EditText
+        android:id="@+id/passEditText"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginStart="32dp"
@@ -45,23 +45,28 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/rounded_background"
         android:backgroundTint="@color/editTextView"
+        android:paddingLeft="16dp"
+        android:textColor="@color/text"
         android:hint="@string/pass_hint"
+        android:inputType="textPassword"
         android:textColorHint="@color/text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText"
-        app:passwordToggleEnabled="true"
-        tools:targetApi="lollipop">
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passEditText"
-            android:background="@drawable/rounded_background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textPassword" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
+    <CheckBox
+        android:id="@+id/showPassCheckBox"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="7dp"
+        android:text="@string/login_show_pass"
+        android:background="@drawable/rounded_background"
+        android:textColor="@color/text"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/passEditText"
+        android:layout_marginLeft="32dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
@@ -75,7 +80,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/showPassCheckBox" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button4"
@@ -97,6 +102,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="205dp" />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/loadingSpinKit"
+        style="@style/SpinKitView.Large.DoubleBounce"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

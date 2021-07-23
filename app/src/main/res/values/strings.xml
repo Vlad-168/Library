@@ -6,4 +6,9 @@
     <string name="login_btn">Войти</string>
     <string name="login_btn_reg">Регистрация</string>
     <string name="login_show_pass">Показать пароль</string>
+    <string name="error_dialog_title">Ошибка!</string>
+    <string name="btn_close_error_dialog">Закрыть</string>
+    <string name="login_email_error">Email введен в непарвильном формате или не введен вообще. Пожалуйста повторите попытку</string>
+    <string name="login_pass_error">Пароль менее 8 символов или не введен вообще. Пожалуйста повторите попытку</string>
+    <string name="login_auth_error">Авторизоваться не удалось.\n Пожалуйста, проверьте email и пароль</string>
 </resources>
