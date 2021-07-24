@@ -3,12 +3,17 @@
     <string name="todo">TODO</string>
     <string name="email_hint">Email</string>
     <string name="pass_hint">Пароль</string>
+    <string name="pass_hint_second">Повторите пароль</string>
     <string name="login_btn">Войти</string>
     <string name="login_btn_reg">Регистрация</string>
     <string name="login_show_pass">Показать пароль</string>
     <string name="error_dialog_title">Ошибка!</string>
     <string name="btn_close_error_dialog">Закрыть</string>
-    <string name="login_email_error">Email введен в непарвильном формате или не введен вообще. Пожалуйста повторите попытку</string>
-    <string name="login_pass_error">Пароль менее 8 символов или не введен вообще. Пожалуйста повторите попытку</string>
+    <string name="login_email_error">Email введен в неправильном формате или не введен вообще. Пожалуйста, повторите попытку</string>
+    <string name="login_pass_error">Пароль менее 8 символов или не введен вообще. Пожалуйста, повторите попытку</string>
     <string name="login_auth_error">Авторизоваться не удалось.\n Пожалуйста, проверьте email и пароль</string>
+    <string name="login_pass_equals_error">Пароли не совпадают. Пожалуйста, повторите попытку</string>
+    <string name="registration_error">Регистрация не удалось.\n Пожалуйста, повторите попытку позже</string>
+    <string name="registration_timeout_error">К сожалению, время ожидания подтверждения почты, вышло</string>
+    <string name="registration_sent_email_success">На указанную вами почту было отправлено письмо, в нем необходимо перейти по ссылке</string>
 </resources>

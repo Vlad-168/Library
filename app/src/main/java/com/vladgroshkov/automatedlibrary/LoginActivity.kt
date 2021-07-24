@@ -7,14 +7,15 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.github.ybq.android.spinkit.sprite.Sprite
-import com.github.ybq.android.spinkit.style.DoubleBounce
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.vladgroshkov.automatedlibrary.utils.LoadingUtil.Companion.hideLoadingAction
+import com.vladgroshkov.automatedlibrary.utils.LoadingUtil.Companion.showLoadingAction
+import com.vladgroshkov.automatedlibrary.utils.ValidationUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.regex.Pattern
 
@@ -44,27 +45,28 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             email = emailEditText.text.toString()
             pass = passEditText.text.toString()
-            if (email.isEmpty() || !checkEmail(email)) {
+            if (!ValidationUtil.isEmailValid(email)) {
                 customDialog.showErrorDialog(getString(R.string.login_email_error))
-            } else if (pass.isEmpty() || pass.length < 8 ) {
+            } else if (!ValidationUtil.isPasswordValid(pass)) {
                 customDialog.showErrorDialog(getString(R.string.login_pass_error))
             } else {
-                showLoadingAction()
+                showLoadingAction(window, loadingSpinKit)
                 signIn(email, pass)
             }
 
+        }
+
+        loginRegisterButton.setOnClickListener {
+            startActivity(Intent(this, RegistrationActivity::class.java))
         }
     }
 
     override fun onStart() {
         super.onStart()
-
-        var currentUser = auth.currentUser
+        val currentUser = auth.currentUser
         if (currentUser != null) {
             reload()
         }
-
-
     }
 
     private fun signIn(email: String, password: String) {
@@ -83,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        loadingSpinKit.visibility = View.GONE
+        hideLoadingAction(window, loadingSpinKit)
         if (user != null) {
             var mainIntent = Intent(this, MainActivity::class.java)
             mainIntent.putExtra("user", user)
@@ -93,16 +95,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun reload() {
 
-    }
-
-    private fun checkEmail(email: String): Boolean {
-        val p = Pattern.compile("^[\\w]{1}[\\w-\\.]*@[\\w-]+\\.[a-z]{2,4}$")
-        val m = p.matcher(email)
-        return m.matches()
-    }
-
-    private fun showLoadingAction() {
-        loadingSpinKit.visibility = View.VISIBLE
     }
 
     override fun onBackPressed() {
