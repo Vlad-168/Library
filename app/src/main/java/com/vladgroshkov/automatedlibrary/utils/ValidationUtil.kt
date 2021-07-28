@@ -19,6 +19,18 @@ class ValidationUtil {
         fun isPasswordsValid(pass: String, pass2: String): Boolean {
             return pass == pass2
         }
+
+        fun isPhoneValid(phone: String): Boolean {
+            val p = Pattern.compile("^\\d[\\d\\(\\)\\ -]{4,14}\\d$")
+            val m = p.matcher(phone)
+            return m.matches()
+        }
+
+        fun isStringValid(string: String): Boolean {
+            val p = Pattern.compile("^[A-Za-zА-Яа-я]{4,40}$")
+            val m = p.matcher(string)
+            return m.matches()
+        }
     }
 
 }

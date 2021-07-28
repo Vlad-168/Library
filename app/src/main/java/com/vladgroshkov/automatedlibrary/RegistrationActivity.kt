@@ -26,6 +26,7 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var pass: String
     private lateinit var pass2: String
     private lateinit var customDialog: AlertCustomDialog
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
@@ -67,6 +68,7 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun createAccount(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->

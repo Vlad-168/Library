@@ -16,4 +16,23 @@
     <string name="registration_error">Регистрация не удалось.\n Пожалуйста, повторите попытку позже</string>
     <string name="registration_timeout_error">К сожалению, время ожидания подтверждения почты, вышло</string>
     <string name="registration_sent_email_success">На указанную вами почту было отправлено письмо, в нем необходимо перейти по ссылке</string>
+    <string name="catalog_books_menu">Каталог книг</string>
+    <string name="profile_menu">Профиль</string>
+    <string name="excellence_menu">Избранное</string>
+    <string name="stopwatch_menu">Задолжности</string>
+    <string name="logout_menu">Выйти</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="title_profile">Нажмите на фотографию для изменения</string>
+    <string name="name_profile">Имя</string>
+    <string name="surname_profile">Фамилия</string>
+    <string name="phone_profile">Номер телефона</string>
+    <string name="save">Сохранить</string>
+    <string name="profile_name_error">Имя содержит не только буквы или вы ничего не ввели.\n Пожалуйста, заполните данные верно</string>
+    <string name="profile_surname_error">Фамилия содержит не только буквы или вы ничего не ввели.\n Пожалуйста, заполните данные верно</string>
+    <string name="profile_phone_error">Введите корректно номер телефона\n Пожалуйста, повторите попытку</string>
+    <string name="readers">Читатели</string>
+
 </resources>

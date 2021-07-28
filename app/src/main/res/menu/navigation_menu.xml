@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuBooks"
+        android:icon="@drawable/books"
+        android:title="@string/catalog_books_menu" />
+
+    <item
+        android:id="@+id/menuProfile"
+        android:icon="@drawable/profile"
+        android:title="@string/profile_menu" />
+
+    <item
+        android:id="@+id/menuExcellence"
+        android:icon="@drawable/excellence"
+        android:title="@string/excellence_menu" />
+
+    <item
+        android:id="@+id/menuStopwatch"
+        android:icon="@drawable/stopwatch"
+        android:title="@string/stopwatch_menu" />
+
+    <item
+        android:id="@+id/menuLogout"
+        android:icon="@drawable/logout"
+        android:title="@string/logout_menu" />
+
+</menu>
