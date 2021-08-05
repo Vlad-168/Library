@@ -1,36 +1,145 @@
 package com.vladgroshkov.automatedlibrary
 
+import AlertCustomDialog
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.SearchView
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.vladgroshkov.automatedlibrary.adapters.BooksListViewAdapter
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.set
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CatalogBooksFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CatalogBooksFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var user: FirebaseUser
+
+    private lateinit var listViewAdapter: BooksListViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_catalog_books, container, false)
+        var view = inflater.inflate(R.layout.fragment_catalog_books, container, false)
+        var customDialog = AlertCustomDialog(view.context)
+
+        val database = Firebase.database
+
+
+        val booksListView = view.findViewById(R.id.booksListView) as ListView
+        val searchBar = view.findViewById(R.id.searchBar) as androidx.appcompat.widget.SearchView
+        val fabBooks = view.findViewById(R.id.fabBooks) as FloatingActionButton
+
+        var list: ArrayList<HashMap<String, String>> = ArrayList()
+        user = FirebaseAuth.getInstance().currentUser!!
+
+        booksListView.isScrollingCacheEnabled = false
+
+        val librarian = database.getReference("").child("users").child(user.uid).child("librarian")
+        librarian.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value != null) {
+                    fabBooks.visibility = View.VISIBLE
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+
+        fabBooks.setOnClickListener{
+            val flag = AddBookFragment.newInstance()
+            (activity as MainActivity).replaceFragment(flag, AddBookFragment.TAG)
+        }
+
+        val myRef = database.getReference("").child("books")
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(datasnapshot: DataSnapshot) {
+                for (book in datasnapshot.children) run {
+                    var hashmap: HashMap<String, String> = HashMap()
+                    var imageUri = book.child("imageBook").value.toString()
+                    if (imageUri.equals("null")) {
+                        hashmap["imageBook"] =
+                            view.context.drawableToUri(R.drawable.skill).toString()
+                    } else {
+                        hashmap["imageBook"] = imageUri
+                    }
+                    hashmap["nameBook"] = book.child("nameBook").value.toString()
+                    hashmap["authorBook"] = book.child("authorBook").value.toString()
+                    hashmap["quantityBook"] = book.child("quantityBook").value.toString()
+                    hashmap["bookId"] = book.key.toString()
+                    list.add(hashmap)
+                }
+
+                listViewAdapter = BooksListViewAdapter(requireActivity(), list)
+
+                if (!listViewAdapter.isEmpty) {
+                    booksListView.adapter = listViewAdapter
+                } else {
+                    customDialog.showInfoDialog(
+                        "К сожалению, в бибилиотеке пока нет книг",
+                        getDrawable(view.context, R.drawable.splash_image)
+                    )
+                }
+                booksListView.isTextFilterEnabled = true
+                var editSearchText =
+                    searchBar.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+                editSearchText.setTextColor(view.resources.getColor(R.color.text))
+                searchBar.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+                    .setImageResource(R.drawable.search_icon)
+                searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                    androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if (TextUtils.isEmpty(newText)) {
+                            booksListView.clearTextFilter()
+                        } else {
+                            booksListView.setFilterText(newText)
+                        }
+                        return true
+                    }
+                })
+
+                booksListView.setOnItemClickListener { parent, view, position, id ->
+                    val element = listViewAdapter.getItem(position) as HashMap<*, *>
+                    val frag = BookFragment.newInstance(element["bookId"].toString())
+                    (activity as MainActivity).replaceFragment(frag, BookFragment.TAG)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, error.message)
+            }
+        })
+        return view
+    }
+
+    fun Context.drawableToUri(drawable: Int): Uri {
+        return Uri.parse("android.resource://$packageName/$drawable")
     }
 
     companion object {
+        var TAG: String = "CatalogFragment"
+
         @JvmStatic
         fun newInstance() =
             CatalogBooksFragment().apply {

@@ -1,59 +1,131 @@
 package com.vladgroshkov.automatedlibrary
 
+import AlertCustomDialog
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.SearchView
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.vladgroshkov.automatedlibrary.adapters.BooksListViewAdapter
+import com.vladgroshkov.automatedlibrary.adapters.ReadersListViewAdapter
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.set
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PupilsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PupilsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var user: FirebaseUser
+
+    private lateinit var listViewAdapter: ReadersListViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pupils, container, false)
+        var view = inflater.inflate(R.layout.fragment_pupils, container, false)
+        var customDialog = AlertCustomDialog(view.context)
+
+        val database = Firebase.database
+
+
+        val readersListView = view.findViewById(R.id.readersListView) as ListView
+        val searchBarReaders = view.findViewById(R.id.searchBarReaders) as androidx.appcompat.widget.SearchView
+
+        var list: ArrayList<HashMap<String, String>> = ArrayList()
+        user = FirebaseAuth.getInstance().currentUser!!
+
+        readersListView.isScrollingCacheEnabled = false
+        val myRef = database.getReference("").child("users")
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(datasnapshot: DataSnapshot) {
+                for (user in datasnapshot.children) run {
+                    var hashmap: HashMap<String, String> = HashMap()
+                    var imageUri = user.child("imageUri").value.toString()
+                    if (imageUri.equals("null")) {
+                        hashmap["imageUri"] =
+                            view.context.drawableToUri(R.drawable.skill).toString()
+                    } else {
+                        hashmap["imageUri"] = imageUri
+                    }
+                    hashmap["name"] = user.child("name").value.toString()
+                    hashmap["surname"] = user.child("surname").value.toString()
+                    hashmap["userId"] = user.key.toString()
+                    list.add(hashmap)
+                }
+
+                listViewAdapter = ReadersListViewAdapter(requireActivity(), list)
+
+                if (!listViewAdapter.isEmpty) {
+                    readersListView.adapter = listViewAdapter
+                } else {
+                    customDialog.showInfoDialog(
+                        "К сожалению, в бибилиотеке нет зарегистрированных читателей",
+                        getDrawable(view.context, R.drawable.splash_image)
+                    )
+                }
+                readersListView.isTextFilterEnabled = true
+                var editSearchText =
+                    searchBarReaders.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+                editSearchText.setTextColor(view.resources.getColor(R.color.text))
+                searchBarReaders.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
+                    .setImageResource(R.drawable.search_icon)
+                searchBarReaders.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                    androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if (TextUtils.isEmpty(newText)) {
+                            readersListView.clearTextFilter()
+                        } else {
+                            readersListView.setFilterText(newText)
+                        }
+                        return true
+                    }
+                })
+
+                readersListView.setOnItemClickListener { parent, view, position, id ->
+                    val element = listViewAdapter.getItem(position) as HashMap<*, *>
+                    val frag = ReaderInfoFragment.newInstance(element["userId"].toString())
+                    (activity as MainActivity).replaceFragment(frag, ReaderInfoFragment.TAG)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, error.message)
+            }
+        })
+        return view
+    }
+
+    fun Context.drawableToUri(drawable: Int): Uri {
+        return Uri.parse("android.resource://$packageName/$drawable")
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PupilsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        var TAG: String = "CatalogFragment"
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PupilsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        fun newInstance() =
+            CatalogBooksFragment().apply {
             }
     }
 }

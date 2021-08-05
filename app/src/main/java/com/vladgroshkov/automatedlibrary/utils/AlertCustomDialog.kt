@@ -10,8 +10,8 @@ class AlertCustomDialog(context: Context) : AlertDialog(context) {
             .setIcon(R.drawable.presence_busy)
             .setTitle("Ошибка!")
             .setMessage(message)
-            .setNegativeButton("Закрыть") {
-                    dialogInterface: DialogInterface, i: Int -> dialogInterface.cancel()
+            .setNegativeButton("Закрыть") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.cancel()
             }
             .show()
     }
@@ -21,8 +21,8 @@ class AlertCustomDialog(context: Context) : AlertDialog(context) {
             .setIcon(iconDrawable)
             .setTitle("Информация")
             .setMessage(message)
-            .setNegativeButton("Закрыть") {
-                    dialogInterface: DialogInterface, i: Int -> dialogInterface.cancel()
+            .setNegativeButton("Закрыть") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.cancel()
             }
             .show()
     }

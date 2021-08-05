@@ -11,7 +11,7 @@ class UriUtil {
             var cursor: Cursor? = null
             return try {
                 val proj = arrayOf(MediaStore.Images.Media.DATA)
-                cursor = context.getContentResolver().query(contentUri!!, proj, null, null, null)
+                cursor = context.contentResolver.query(contentUri!!, proj, null, null, null)
                 val column_index: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
                 cursor.moveToFirst()
                 cursor.getString(column_index)

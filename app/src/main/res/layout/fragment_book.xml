@@ -1,0 +1,135 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".BookFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewBookLogo"
+            android:layout_width="160dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/qrImageViewBook" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reverseButtonBook"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/button"
+            android:text="вернуться в каталог"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintCircleRadius="10dp"
+            android:background="@color/editTextView"
+            app:layout_constraintBottom_toTopOf="@+id/qrImageViewBook"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewBookLogo"
+            app:layout_constraintTop_toTopOf="@+id/imageViewBookLogo">
+
+            <TextView
+                android:id="@+id/nameBookBook"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:text="Название книги"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/authorBookBook"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/authorBookBook"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="16dp"
+                android:text="Автор (ы) книги"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/publishBookBook"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameBookBook" />
+
+            <TextView
+                android:id="@+id/publishBookBook"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="16dp"
+                android:text="Издательство"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/quantityBookBook"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/authorBookBook" />
+
+            <TextView
+                android:id="@+id/quantityBookBook"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="16dp"
+                android:text="Осталось 100 экземпляров"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/publishBookBook" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <ImageView
+            android:id="@+id/qrImageViewBook"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/search_cancel_icon"
+            app:layout_constraintBottom_toTopOf="@+id/reverseButtonBook"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBookLogo" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:visibility="gone"
+        android:layout_marginBottom="80dp"
+        android:backgroundTint="@color/editTextView"
+        android:src="@drawable/edit_icon"
+        app:layout_constraintBottom_toTopOf="@+id/reverseButtonBook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qrImageViewBook" />
+
+
+</FrameLayout>

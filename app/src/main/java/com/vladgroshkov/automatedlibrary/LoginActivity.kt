@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.github.ybq.android.spinkit.SpinKitView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -16,9 +18,6 @@ import com.google.firebase.ktx.Firebase
 import com.vladgroshkov.automatedlibrary.utils.LoadingUtil.Companion.hideLoadingAction
 import com.vladgroshkov.automatedlibrary.utils.LoadingUtil.Companion.showLoadingAction
 import com.vladgroshkov.automatedlibrary.utils.ValidationUtil
-import kotlinx.android.synthetic.main.activity_login.*
-import java.util.regex.Pattern
-
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,19 +25,35 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var pass: String
     private lateinit var customDialog: AlertCustomDialog
+
+    private lateinit var showPassCheckBox: CheckBox
+    private lateinit var passEditText: EditText
+    private lateinit var loginButton: Button
+    private lateinit var emailEditText: EditText
+    private lateinit var loginRegisterButton: Button
+    private lateinit var loadingSpinKit: SpinKitView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = Firebase.auth
         customDialog = AlertCustomDialog(this)
 
+        showPassCheckBox = findViewById(R.id.showPassCheckBox)
+        passEditText = findViewById(R.id.passEditText)
+        loginButton = findViewById(R.id.loginButton)
+        emailEditText = findViewById(R.id.emailEditText)
+        loginRegisterButton = findViewById(R.id.loginRegisterButton)
+        loadingSpinKit = findViewById(R.id.loadingSpinKit)
 
         showPassCheckBox.setOnCheckedChangeListener { btn, isChecked ->
             Log.d(TAG, isChecked.toString())
             if (isChecked) {
-                passEditText.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                passEditText.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
             } else {
-                passEditText.transformationMethod = PasswordTransformationMethod.getInstance()
+                passEditText.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
             }
         }
 

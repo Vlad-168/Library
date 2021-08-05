@@ -2,7 +2,6 @@ package com.vladgroshkov.automatedlibrary
 
 import AlertCustomDialog
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
@@ -13,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -23,10 +23,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.vladgroshkov.automatedlibrary.utils.ValidationUtil
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.fragment_profile.view.*
-import kotlinx.android.synthetic.main.layout_navigation_header.*
-import java.io.InputStream
 
 
 class ProfileFragment : Fragment() {
@@ -40,23 +36,35 @@ class ProfileFragment : Fragment() {
     private lateinit var customDialog: AlertCustomDialog
     private lateinit var user: FirebaseUser
 
+    private lateinit var imageViewProfile: ImageView
+    private lateinit var reverseButtonBook: Button
+    private lateinit var nameEditTextProfile: EditText
+    private lateinit var surnameEditTextProfile: EditText
+    private lateinit var phoneEditTextProfile: EditText
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view  = inflater.inflate(R.layout.fragment_profile, container, false)
+        var view = inflater.inflate(R.layout.fragment_profile, container, false)
         user = FirebaseAuth.getInstance().currentUser!!
 
+        imageViewProfile = view.findViewById<ImageView>(R.id.imageViewProfile)
+        reverseButtonBook = view.findViewById(R.id.reverseButtonBook)
+        nameEditTextProfile = view.findViewById<EditText>(R.id.nameEditTextProfile)
+        surnameEditTextProfile = view.findViewById<EditText>(R.id.surnameEditTextProfile)
+        phoneEditTextProfile = view.findViewById<EditText>(R.id.phoneEditTextProfile)
+
         customDialog = AlertCustomDialog(view.context)
-        view.imageViewProfile.setOnClickListener {
+        imageViewProfile.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)
         }
 
         isUserHaveProfile()
 
-        view.saveButtonProfile.setOnClickListener {
+        reverseButtonBook.setOnClickListener {
             name = nameEditTextProfile.text.toString()
             surname = surnameEditTextProfile.text.toString()
             phone = phoneEditTextProfile.text.toString()
@@ -71,6 +79,7 @@ class ProfileFragment : Fragment() {
                     imageUri = view.context.drawableToUri(R.drawable.skill)
                 }
                 val database = Firebase.database
+
                 val myUserId = user.uid
                 val myRef = database.getReference("").child("users").child(myUserId)
 
@@ -94,12 +103,13 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun Context.drawableToUri(drawable: Int):Uri{
+    fun Context.drawableToUri(drawable: Int): Uri {
         return Uri.parse("android.resource://$packageName/$drawable")
     }
 
     private fun isUserHaveProfile() {
         val database = Firebase.database
+
         val myRef = database.getReference("").child("users").child(user.uid)
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -108,13 +118,14 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) { }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 
     @SuppressLint("ResourceType")
     private fun setProfileInfo() {
         val database = Firebase.database
+
         val myRef = database.getReference("").child("users").child(user.uid)
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {

@@ -34,8 +34,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:theme="@style/NavigationViewStyle"
-        app:itemIconSize="@dimen/design_navigation_icon_size"
-        app:headerLayout="@layout/layout_navigation_header" />
+        app:itemIconSize="@dimen/design_navigation_icon_size" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

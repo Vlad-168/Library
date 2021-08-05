@@ -34,5 +34,17 @@
     <string name="profile_surname_error">Фамилия содержит не только буквы или вы ничего не ввели.\n Пожалуйста, заполните данные верно</string>
     <string name="profile_phone_error">Введите корректно номер телефона\n Пожалуйста, повторите попытку</string>
     <string name="readers">Читатели</string>
+    <string name="settings">Настройки</string>
+    <string name="search_title">Поиск по названию книги</string>
 
+    <string name="name_book">Название</string>
+    <string name="authors_book">Автор(ы), например Гоголь Н.В.</string>
+    <string name="publish_book">Издательство</string>
+    <string name="book_name_error">Название книги не введено.\n Пожалуйста, заполните данные верно</string>
+    <string name="book_author_error">Автор(ы) книги не введен(ы).\n Пожалуйста, заполните данные верно</string>
+    <string name="book_publish_error">Издетельство книги не введено.\n Пожалуйста, заполните данные верно</string>
+    <string name="book_quantity_error">Количество экземпляров книги не введено.\n Пожалуйста, заполните данные верно</string>
+    <string name="add_book">Добавить</string>
+    <string name="add_book_quantity">Количество экземпляров</string>
+    <string name="delete_book">Удалить</string>
 </resources>

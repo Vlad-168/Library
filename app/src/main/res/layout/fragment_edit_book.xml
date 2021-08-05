@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ProfileFragment">
+    tools:context=".EditBookFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/titleTextViewProfile"
+            android:id="@+id/titleTextViewBook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -23,67 +23,81 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageViewProfile"
+            android:id="@+id/imageViewBook"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/skill"
+            android:src="@drawable/books"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextViewProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/titleTextViewBook" />
 
         <EditText
-            android:id="@+id/nameEditTextProfile"
+            android:id="@+id/nameEditTextBook"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/rounded_background"
-            android:hint="@string/name_profile"
+            android:hint="@string/name_book"
             android:inputType="textCapSentences"
             android:paddingLeft="16dp"
             android:textColor="@color/text"
             android:textColorHint="@color/text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewBook" />
 
         <EditText
-            android:id="@+id/surnameEditTextProfile"
+            android:id="@+id/authorEditTextBook"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/rounded_background"
-            android:hint="@string/surname_profile"
+            android:hint="@string/authors_book"
             android:inputType="textCapSentences"
             android:paddingLeft="16dp"
             android:textColor="@color/text"
             android:textColorHint="@color/text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameEditTextProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/nameEditTextBook" />
 
         <EditText
-            android:id="@+id/phoneEditTextProfile"
+            android:id="@+id/publishEditTextBook"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/rounded_background"
-            android:hint="@string/phone_profile"
-            android:inputType="phone"
+            android:hint="@string/publish_book"
+            android:inputType="textCapCharacters"
             android:paddingLeft="16dp"
             android:textColor="@color/text"
             android:textColorHint="@color/text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/surnameEditTextProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/authorEditTextBook" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/reverseButtonBook"
+            android:id="@+id/deleteButtonBook"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/button"
+            android:text="@string/delete_book"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/saveButtonBook"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButtonBook"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
