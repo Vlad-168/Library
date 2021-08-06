@@ -2,11 +2,12 @@ package com.vladgroshkov.automatedlibrary
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -24,9 +25,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-
-
-
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -77,7 +75,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onCancelled(error: DatabaseError) {}
         })
         navigationView.setNavigationItemSelectedListener(this)
-
 
         isUserHaveProfile()
     }
@@ -163,11 +160,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var fragment: Fragment? = null
+        if (item.itemId == R.id.menuLogout) {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            drawerLayout.closeDrawer(GravityCompat.START)
+            return true
+        }
         val fragmentClass: Class<*> = when (item.itemId) {
             R.id.menuBooks -> CatalogBooksFragment::class.java
             R.id.menuProfile -> ProfileFragment::class.java
-            R.id.menuExcellence -> ExcellenceFragment::class.java
-            R.id.menuStopwatch -> StopwtachFragment::class.java
+            R.id.menuGivenBook -> GivenBookFragment::class.java
+//            R.id.menuStopwatch -> Stopwta/**/chFragment::class.java
             R.id.menuPupils -> PupilsFragment::class.java
             else -> CatalogBooksFragment::class.java
         }
@@ -189,6 +195,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun replaceFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.nav_host_fragment_container, fragment, tag).addToBackStack("").commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onBackPressed() {

@@ -38,6 +38,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         auth = Firebase.auth
         customDialog = AlertCustomDialog(this)
+        if (auth.currentUser != null) {
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        }
 
         showPassCheckBox = findViewById(R.id.showPassCheckBox)
         passEditText = findViewById(R.id.passEditText)

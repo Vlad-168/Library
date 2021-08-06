@@ -60,4 +60,6 @@ dependencies {
     implementation 'org.jetbrains.anko:anko-common:0.9'
 
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    implementation 'com.google.android.gms:play-services-vision:20.1.3'
 }

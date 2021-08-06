@@ -3,14 +3,13 @@ package com.vladgroshkov.automatedlibrary
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +20,10 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.vladgroshkov.automatedlibrary.adapters.BooksListViewAdapter
+import com.vladgroshkov.automatedlibrary.adapters.ReaderBooksListViewAdapter
+import com.vladgroshkov.automatedlibrary.utils.GivenBooksUtil
+import com.vladgroshkov.automatedlibrary.utils.UriUtil.Companion.drawableToUri
 
 private const val USER_ID = "userId"
 
@@ -48,6 +51,8 @@ class ReaderInfoFragment : Fragment() {
         val emailReaderInfo = view.findViewById(R.id.emailReaderInfo) as TextView
         val booksReaderListView = view.findViewById(R.id.booksReaderListView) as ListView
         val reverseButtonReaders = view.findViewById(R.id.reverseButtonReaders) as Button
+        val giveButtonReaders = view.findViewById(R.id.giveButtonReaders) as Button
+        val takeButtonReaders = view.findViewById(R.id.takeButtonReaders) as Button
 
         val firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
@@ -64,37 +69,31 @@ class ReaderInfoFragment : Fragment() {
                     imageUri = view.context.drawableToUri(R.drawable.skill)
                 }
                 imageViewReaderLogo.setImageURI(imageUri)
+                val books = user.child("books")
+                GivenBooksUtil.showGivenBooks(view, requireActivity(), books, booksReaderListView)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e(CatalogBooksFragment.TAG, error.message)
+                Log.e(TAG, error.message)
             }
         })
-
-        val myRefBooks = database.getReference("").child("users").child(userId!!).child("books")
-        myRefBooks.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(books: DataSnapshot) {
-                for (book in books.children) kotlin.run {
-
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e(CatalogBooksFragment.TAG, error.message)
-            }
-        })
-
 
         reverseButtonReaders.setOnClickListener {
             val flag = PupilsFragment.newInstance()
             (activity as MainActivity).replaceFragment(flag, PupilsFragment.TAG)
         }
 
-        return view
-    }
+        giveButtonReaders.setOnClickListener {
+            val flag = GiveFragment.newInstance(userId!!)
+            (activity as MainActivity).replaceFragment(flag, GiveFragment.TAG)
+        }
 
-    fun Context.drawableToUri(drawable: Int): Uri {
-        return Uri.parse("android.resource://$packageName/$drawable")
+        takeButtonReaders.setOnClickListener {
+            val flag = TakeFragment.newInstance(userId!!)
+            (activity as MainActivity).replaceFragment(flag, TakeFragment.TAG)
+        }
+
+        return view
     }
 
     companion object {

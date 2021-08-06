@@ -18,7 +18,7 @@
     <string name="registration_sent_email_success">На указанную вами почту было отправлено письмо, в нем необходимо перейти по ссылке</string>
     <string name="catalog_books_menu">Каталог книг</string>
     <string name="profile_menu">Профиль</string>
-    <string name="excellence_menu">Избранное</string>
+    <string name="given_books_menu">Выданные книги</string>
     <string name="stopwatch_menu">Задолжности</string>
     <string name="logout_menu">Выйти</string>
 

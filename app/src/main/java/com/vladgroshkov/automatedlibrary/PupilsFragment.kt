@@ -10,12 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.ListView
 import android.widget.SearchView
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -23,7 +21,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.vladgroshkov.automatedlibrary.adapters.BooksListViewAdapter
 import com.vladgroshkov.automatedlibrary.adapters.ReadersListViewAdapter
 import java.util.*
 import kotlin.collections.HashMap
@@ -77,28 +74,27 @@ class PupilsFragment : Fragment() {
                 } else {
                     customDialog.showInfoDialog(
                         "К сожалению, в бибилиотеке нет зарегистрированных читателей",
-                        getDrawable(view.context, R.drawable.splash_image)
+                        getDrawable(view.context, R.drawable.splash_image),
+                        newInstance(), activity!!, true
                     )
                 }
                 readersListView.isTextFilterEnabled = true
                 var editSearchText =
                     searchBarReaders.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
                 editSearchText.setTextColor(view.resources.getColor(R.color.text))
-                searchBarReaders.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
-                    .setImageResource(R.drawable.search_icon)
+
                 searchBarReaders.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
                     androidx.appcompat.widget.SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String): Boolean {
                         return false
                     }
-
                     override fun onQueryTextChange(newText: String): Boolean {
-                        if (TextUtils.isEmpty(newText)) {
-                            readersListView.clearTextFilter()
-                        } else {
-                            readersListView.setFilterText(newText)
-                        }
-                        return true
+//                        if (TextUtils.isEmpty(newText)) {
+//                            readersListView.clearTextFilter()
+//                        } else {
+//                            readersListView.setFilterText(newText)
+//                        }
+                        return false
                     }
                 })
 
@@ -121,11 +117,11 @@ class PupilsFragment : Fragment() {
     }
 
     companion object {
-        var TAG: String = "CatalogFragment"
+        var TAG: String = "ReadersFragment"
 
         @JvmStatic
         fun newInstance() =
-            CatalogBooksFragment().apply {
+            PupilsFragment().apply {
             }
     }
 }

@@ -6,13 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.SearchView
+import android.view.*
+import android.widget.*
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,6 +19,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.vladgroshkov.automatedlibrary.adapters.BooksListViewAdapter
+import com.vladgroshkov.automatedlibrary.models.BookModel
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.collections.set
@@ -33,6 +29,8 @@ class CatalogBooksFragment : Fragment() {
     private lateinit var user: FirebaseUser
 
     private lateinit var listViewAdapter: BooksListViewAdapter
+    private lateinit var booksListView: ListView
+    private lateinit var searchBar: androidx.appcompat.widget.SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,11 +42,10 @@ class CatalogBooksFragment : Fragment() {
         val database = Firebase.database
 
 
-        val booksListView = view.findViewById(R.id.booksListView) as ListView
-        val searchBar = view.findViewById(R.id.searchBar) as androidx.appcompat.widget.SearchView
+        booksListView = view.findViewById(R.id.booksListView) as ListView
+        searchBar = view.findViewById(R.id.searchBar) as androidx.appcompat.widget.SearchView
         val fabBooks = view.findViewById(R.id.fabBooks) as FloatingActionButton
 
-        var list: ArrayList<HashMap<String, String>> = ArrayList()
         user = FirebaseAuth.getInstance().currentUser!!
 
         booksListView.isScrollingCacheEnabled = false
@@ -69,68 +66,67 @@ class CatalogBooksFragment : Fragment() {
         }
 
         val myRef = database.getReference("").child("books")
-        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(datasnapshot: DataSnapshot) {
-                for (book in datasnapshot.children) run {
-                    var hashmap: HashMap<String, String> = HashMap()
-                    var imageUri = book.child("imageBook").value.toString()
-                    if (imageUri.equals("null")) {
-                        hashmap["imageBook"] =
-                            view.context.drawableToUri(R.drawable.skill).toString()
-                    } else {
-                        hashmap["imageBook"] = imageUri
-                    }
-                    hashmap["nameBook"] = book.child("nameBook").value.toString()
-                    hashmap["authorBook"] = book.child("authorBook").value.toString()
-                    hashmap["quantityBook"] = book.child("quantityBook").value.toString()
-                    hashmap["bookId"] = book.key.toString()
-                    list.add(hashmap)
-                }
+        myRef.get().addOnSuccessListener { task ->
+            getBooksList(task)
+        }
 
-                listViewAdapter = BooksListViewAdapter(requireActivity(), list)
-
-                if (!listViewAdapter.isEmpty) {
-                    booksListView.adapter = listViewAdapter
-                } else {
-                    customDialog.showInfoDialog(
-                        "К сожалению, в бибилиотеке пока нет книг",
-                        getDrawable(view.context, R.drawable.splash_image)
-                    )
-                }
-                booksListView.isTextFilterEnabled = true
-                var editSearchText =
-                    searchBar.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-                editSearchText.setTextColor(view.resources.getColor(R.color.text))
-                searchBar.findViewById<ImageView>(androidx.appcompat.R.id.search_button)
-                    .setImageResource(R.drawable.search_icon)
-                searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                    androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String): Boolean {
-                        return false
-                    }
-
-                    override fun onQueryTextChange(newText: String): Boolean {
-                        if (TextUtils.isEmpty(newText)) {
-                            booksListView.clearTextFilter()
-                        } else {
-                            booksListView.setFilterText(newText)
-                        }
-                        return true
-                    }
-                })
-
-                booksListView.setOnItemClickListener { parent, view, position, id ->
-                    val element = listViewAdapter.getItem(position) as HashMap<*, *>
-                    val frag = BookFragment.newInstance(element["bookId"].toString())
-                    (activity as MainActivity).replaceFragment(frag, BookFragment.TAG)
-                }
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+//                        booksListView.setFilterText(query)
+                return false
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.e(TAG, error.message)
+            override fun onQueryTextChange(newText: String): Boolean {
+//                booksListView.setFilterText(newText)
+                return true
             }
         })
+
         return view
+    }
+
+    private fun getBooksList(dataSnapshot: DataSnapshot) {
+        var list: ArrayList<HashMap<String, String>> = ArrayList()
+        for (book in dataSnapshot.children) run {
+            var hashmap: HashMap<String, String> = HashMap()
+            var imageUri = book.child("imageBook").value.toString()
+            if (imageUri.equals("null")) {
+                hashmap["imageBook"] =
+                    requireContext().drawableToUri(R.drawable.skill).toString()
+            } else {
+                hashmap["imageBook"] = imageUri
+            }
+            hashmap["nameBook"] = book.child("nameBook").value.toString()
+            hashmap["authorBook"] = book.child("authorBook").value.toString()
+            hashmap["quantityBook"] = book.child("quantityBook").value.toString()
+            hashmap["bookId"] = book.key.toString()
+            list.add(hashmap)
+        }
+
+        listViewAdapter = BooksListViewAdapter(requireActivity(), list)
+
+        if (!listViewAdapter.isEmpty) {
+            booksListView.adapter = listViewAdapter
+        } else {
+//                    customDialog.showInfoDialog(
+//                        "К сожалению, в бибилиотеке пока нет книг",
+//                        getDrawable(view.context, R.drawable.splash_image)
+//                    )
+        }
+        booksListView.isTextFilterEnabled = true
+
+
+//                booksListView.setOnItemClickListener { parent, view, position, id ->
+//                    val element = listViewAdapter.getItem(position) as HashMap<*, *>
+//                    val frag = BookFragment.newInstance(element["bookId"].toString())
+//                    (activity as MainActivity).replaceFragment(frag, BookFragment.TAG)
+//                }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     fun Context.drawableToUri(drawable: Int): Uri {

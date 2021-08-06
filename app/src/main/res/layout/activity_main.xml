@@ -36,5 +36,4 @@
         android:theme="@style/NavigationViewStyle"
         app:itemIconSize="@dimen/design_navigation_icon_size" />
 
-
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/imageViewReaderLogo"
-            android:layout_width="160dp"
-            android:layout_height="240dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/skill"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,36 @@
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/giveButtonReaders" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/giveButtonReaders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/button"
+            android:text="Выдать"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/takeButtonReaders"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/LinearLayoutBooks" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/takeButtonReaders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/button"
+            android:text="Сдать"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/giveButtonReaders"
+            app:layout_constraintTop_toBottomOf="@id/LinearLayoutBooks" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -103,13 +132,13 @@
             android:id="@+id/booksReaderInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:paddingLeft="20dp"
             android:text="Выданные книги:"
             android:textColor="@color/text"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/LinearLayoutBooks"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,19 +149,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/reverseButtonReaders"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/giveButtonReaders"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/booksReaderInfo"
-            android:orientation="vertical">
+            app:layout_constraintTop_toBottomOf="@+id/booksReaderInfo">
 
             <ListView
                 android:id="@+id/booksReaderListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -15,14 +15,14 @@
         android:title="@string/profile_menu" />
 
     <item
-        android:id="@+id/menuExcellence"
-        android:icon="@drawable/excellence"
-        android:title="@string/excellence_menu" />
+        android:id="@+id/menuGivenBook"
+        android:icon="@drawable/give_book"
+        android:title="@string/given_books_menu" />
 
-    <item
-        android:id="@+id/menuStopwatch"
-        android:icon="@drawable/stopwatch"
-        android:title="@string/stopwatch_menu" />
+<!--    <item-->
+<!--        android:id="@+id/menuStopwatch"-->
+<!--        android:icon="@drawable/stopwatch"-->
+<!--        android:title="@string/stopwatch_menu" />-->
 
     <item
         android:id="@+id/menuLogout"

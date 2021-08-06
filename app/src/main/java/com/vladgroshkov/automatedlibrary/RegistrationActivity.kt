@@ -43,7 +43,7 @@ class RegistrationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
-        showPassCheckBoxReg = findViewById(R.id.showPassCheckBox)
+        showPassCheckBoxReg = findViewById(R.id.showPassCheckBox_Reg)
         passEditTextReg = findViewById(R.id.passEditText_Reg)
         showPassCheckBox2Reg = findViewById(R.id.showPassCheckBox2_Reg)
         passEditText2Reg = findViewById(R.id.passEditText2_Reg)
@@ -144,7 +144,7 @@ class RegistrationActivity : AppCompatActivity() {
         user.sendEmailVerification()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    customDialog.showInfoDialog(
+                    customDialog.showInfoDialogWithoutAction(
                         getString(R.string.registration_sent_email_success),
                         getDrawable(R.drawable.splash_image)
                     )
