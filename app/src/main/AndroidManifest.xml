@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name=
@@ -21,7 +22,6 @@
         android:theme="@style/Theme.AutomatedLibrary">
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".NavHeaderMenu" />
         <activity android:name=".LogoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

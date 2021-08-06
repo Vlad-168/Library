@@ -4,17 +4,10 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.transition.Transition
-import android.view.WindowManager
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.app.ActivityCompat
-import kotlinx.android.synthetic.main.activity_logo.*
 
 class LogoActivity : AppCompatActivity() {
 
@@ -22,9 +15,10 @@ class LogoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logo)
 
+        val motionLayout = findViewById<MotionLayout>(R.id.motion_layout)
         hasWriteStoragePermission()
 
-        motion_layout.addTransitionListener(object: MotionLayout.TransitionListener {
+        motionLayout.addTransitionListener(object : MotionLayout.TransitionListener {
             override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
             }
 
@@ -34,6 +28,7 @@ class LogoActivity : AppCompatActivity() {
             override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
                 startActivity(Intent(this@LogoActivity, LoginActivity::class.java))
             }
+
             override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
             }
 

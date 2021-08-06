@@ -1,0 +1,167 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".BookFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewReaderLogo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/skill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reverseButtonReaders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/button"
+            android:text="вернуться к списку читателей"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/giveButtonReaders" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/giveButtonReaders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/button"
+            android:text="Выдать"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/takeButtonReaders"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/LinearLayoutBooks" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/takeButtonReaders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="@color/button"
+            android:text="Сдать"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/giveButtonReaders"
+            app:layout_constraintTop_toBottomOf="@id/LinearLayoutBooks" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/editTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewReaderLogo"
+            app:layout_constraintCircleRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewReaderLogo"
+            app:layout_constraintTop_toTopOf="@+id/imageViewReaderLogo">
+
+            <TextView
+                android:id="@+id/nameReader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:text="Имя"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/surnameReader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/surnameReader"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:text="Фамилия"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/emailReaderInfo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameReader" />
+
+            <TextView
+                android:id="@+id/phoneReaderInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="16dp"
+                android:text="Номер телефона"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailReaderInfo" />
+
+            <TextView
+                android:id="@+id/emailReaderInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:text="Почта"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/phoneReaderInfo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/surnameReader" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/booksReaderInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="20dp"
+            android:text="Выданные книги:"
+            android:textColor="@color/text"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/LinearLayoutBooks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewReaderLogo" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutBooks"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/giveButtonReaders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/booksReaderInfo">
+
+            <ListView
+                android:id="@+id/booksReaderListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

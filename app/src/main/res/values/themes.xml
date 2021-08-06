@@ -27,6 +27,13 @@
     <style name="NavigationViewStyle">
         <item name="android:textSize">20sp</item>
         <item name="android:listPreferredItemHeightSmall">60dp</item>
+    </style>
+
+    <style name="SearchBarStyle" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="ViewCard">
 
     </style>
 

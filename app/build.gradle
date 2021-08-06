@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
 }
 
@@ -32,6 +31,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -52,4 +54,12 @@ dependencies {
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0-alpha05'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.0-alpha05'
+
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    implementation 'org.jetbrains.anko:anko-common:0.9'
+
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    implementation 'com.google.android.gms:play-services-vision:20.1.3'
 }
